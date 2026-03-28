@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Ibu</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #ffe6f2;
+      text-align: center;
+      overflow: hidden;
+    }
+    .page {
+      display: none;
+      height: 100vh;
+      width: 100vw;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .active {
+      display: flex;
+    }
+    h1 {
+      color: #d63384;
+      font-size: 2em;
+    }
+    p {
+      color: #333;
+      font-size: 1.1em;
+      margin: 20px;
+      line-height: 1.4em;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 1em;
+      background-color: #ff99cc;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      position: absolute;
+      transition: transform 0.2s;
+    }
+    img {
+      max-width: 250px;
+      width: 80%;
+      height: auto;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .playBtn {
+      padding: 6px 12px;
+      font-size: 0.9em;
+      background-color: #d63384;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      margin-bottom: 20px;
+    }
+    .balloon {
+      position: absolute;
+      width: 50px;
+      height: 70px;
+      background-color: #ff99cc;
+      border-radius: 50% 50% 50% 50%;
+      animation: floatDown 6s linear infinite;
+    }
+    .string {
+      position: absolute;
+      width: 2px;
+      height: 30px;
+      background-color: #555;
+      top: 70px;
+      left: 24px;
+    }
+    @keyframes floatDown {
+      0% { top: -100px; opacity: 1; }
+      100% { top: 100vh; opacity: 0; }
+    }
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- First Page -->
+  <div id="page1" class="page active">
+    <h1>Maaf Ibu ❤️</h1>
+    <p>Saya tak sempat wish semalam sebab balik kampung, tapi saya tak pernah lupa. Saya nak wish dengan cara istimewa melalui website ini.</p>
+    <button id="runawayBtn">sini ibu</button>
+  </div>
+
+  <!-- Second Page -->
+  <div id="page2" class="page">
+    <h1>Happy Birthday Ibu!</h1>
+    <img src="ibu.jpeg" alt="Birthday Cake">
+    <button class="playBtn" id="playSongBtn">▶ Play Song</button>
+    <p>happy birthday ibu, maaf tak menjadi ayah yang terbaik buat maleeq. maaf tak menjadi yang terbaik untuk awak. atleast, saya juga pernah bahagiakan awak kan? pernah beri kasih sayang kan? saya minta maaf atas kesalahan saya dan minta maaf sebab lewat wish. bukan saya lupa wish awak tapi saya dekat kampung dan saya memang niat nak wish melalui website ni. semoga awak dimurahkan rezeki di panjangkan umur dan jika ada jodoh adalah. jika tiada, saya harap awak bertemu lelaki yang lebih baik dan sempurna dari saya. maaf atas kekurangan yang ada ❤️</p>
+    <audio id="birthdaySong" loop>
+      <source src="ibu.mpeg" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    const btn = document.getElementById('runawayBtn');
+    let clickCount = 0;
+
+    function moveButton() {
+      if (clickCount < 10) {
+        const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+        btn.textContent = clickCount % 2 === 0 ? "hahahahaha sini lahh ibuu" : "sini ibu";
+        clickCount++;
+      } else {
+        document.getElementById('page1').classList.remove('active');
+        document.getElementById('page2').classList.add('active');
+        startBalloons();
+      }
+    }
+
+    btn.addEventListener('mouseover', moveButton);
+    btn.addEventListener('click', moveButton);
+    btn.addEventListener('touchstart', moveButton);
+
+    function startBalloons() {
+      setInterval(() => {
+        const balloon = document.createElement('div');
+        balloon.classList.add('balloon');
+        balloon.style.left = Math.random() * window.innerWidth + 'px';
+        balloon.style.backgroundColor = ['#ff99cc','#ff66b2','#ffb3d9','#ff80c0'][Math.floor(Math.random()*4)];
+
+        const string = document.createElement('div');
+        string.classList.add('string');
+        balloon.appendChild(string);
+
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 6000);
+      }, 400);
+    }
+
+    // Play button for song
+    const playBtn = document.getElementById('playSongBtn');
+    const song = document.getElementById('birthdaySong');
+    playBtn.addEventListener('click', () => {
+      song.play();
+    });
+  </script>
+</body>
+</html>
